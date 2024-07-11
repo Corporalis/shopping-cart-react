@@ -1,26 +1,37 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Provider } from 'react-redux';
+import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import styled from 'styled-components';
+import Cart from './components/Cart';
+import ProductList from './components/ProductList';
+import store from './store';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <Router>
+        <Nav>
+          <Link to="/">Products</Link>
+          <Link to="/cart">Cart</Link>
+        </Nav>
+        <Routes>
+          <Route path="/" element={<ProductList />} />
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </Router>
+    </Provider>
   );
-}
+};
 
 export default App;
+
+const Nav = styled.nav`
+  display: flex;
+  gap: 20px;
+  padding: 16px;
+  background-color: #f8f9fa;
+  a {
+    text-decoration: none;
+    color: #007bff;
+  }
+`;
