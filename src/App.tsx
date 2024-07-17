@@ -1,23 +1,40 @@
-import React from 'react';
-import { Provider } from 'react-redux';
-import { Link, Route, BrowserRouter as Router, Routes } from 'react-router-dom';
-import styled from 'styled-components';
-import Cart from './components/Cart';
-import ProductList from './components/ProductList';
-import store from './store';
+import React from "react";
+import { Provider } from "react-redux";
+import {
+  NavLink,
+  Route,
+  BrowserRouter as Router,
+  Routes,
+} from "react-router-dom";
+import styled from "styled-components";
+import Cart from "./components/Cart";
+import ProductList from "./components/ProductList";
+import store from "./store";
 
 const App: React.FC = () => {
   return (
     <Provider store={store}>
       <Router>
         <Nav>
-          <Link to="/">Products</Link>
-          <Link to="/cart">Cart</Link>
+          <NavLink
+            className={({ isActive }) => (isActive ? "active" : "")}
+            to="/"
+          >
+            Products
+          </NavLink>
+          <NavLink
+            className={({ isActive }) => (isActive ? "active" : "")}
+            to="/cart"
+          >
+            Cart
+          </NavLink>
         </Nav>
-        <Routes>
-          <Route path="/" element={<ProductList />} />
-          <Route path="/cart" element={<Cart />} />
-        </Routes>
+        <Main>
+          <Routes>
+            <Route path="/" element={<ProductList />} />
+            <Route path="/cart" element={<Cart />} />
+          </Routes>
+        </Main>
       </Router>
     </Provider>
   );
@@ -34,4 +51,11 @@ const Nav = styled.nav`
     text-decoration: none;
     color: #007bff;
   }
+  a.active {
+    font-weight: bold;
+  }
+`;
+
+const Main = styled.main`
+  padding: 1em;
 `;
